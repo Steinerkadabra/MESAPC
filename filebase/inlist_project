@@ -1,0 +1,201 @@
+! Base inlist for running the stars in our stellar grid
+
+&star_job
+! Avoid printing a lot of stuff in terminal when we start a run
+    show_log_description_at_start=.false.
+
+! begin with a pre-main sequence model
+    create_pre_main_sequence_model = .true.
+    pre_ms_relax_num_steps = 100
+
+! some way to deal with nuclear reaction networks
+    change_net = .true.
+    new_net_name = 'pp_and_cno_extras.net'
+    change_initial_net = .true.
+
+! initial mixture and opacities
+    initial_zfracs=8
+    set_uniform_initial_composition=.true.
+    initial_h1 = 0.6999724223938222d0  
+    initial_h2 = 2.7577606177794738d-5 
+    initial_he3 = 8.494422310803355d-5
+    initial_he4 = 0.279915166 
+
+! neither save a model nor a photo when terminating the run
+    save_model_when_terminate = .false.
+    save_photo_when_terminate = .false.
+
+! display on-screen plots
+    pgstar_flag = .true.
+
+! Avoid printing a lot of stuff in the terminal to begin with. We don't need this.
+    show_log_description_at_start = .false.
+
+! Opacity tables to use
+    kappa_file_prefix = 'OP_a09_nans_removed_by_hand' 
+    kappa_lowT_prefix = 'lowT_Freedman11'
+
+
+/ !end of star_job namelist
+
+
+&controls
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! STELLAR MODEL CONTROLS !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    initial_mass = 1
+
+! initial metallicity
+! metals set according to initial_zfracs
+    initial_z = 0.02     ! default = 0.02
+    !initial_y = 0.28     ! default = -1 ( 0.24+2*initial_z)
+
+
+! Atmosphere Option
+    atm_option = 'T_tau'
+    atm_T_tau_relation = 'Eddington'
+    atm_T_tau_opacity = 'varying'
+    atm_T_tau_errtol = 1d-9
+
+
+!!!!!!!!!!!!!!!!!!!!!
+!! MIXING CONTROLS !!
+!!!!!!!!!!!!!!!!!!!!!
+
+    mixing_length_alpha = 1.8    
+    remove_small_D_limit = 1d-6
+
+! If false, then stick to the usual definition – P/(g*rho). If true, use min of the usual and sound speed * hydro time scale, sqrt(P/G)/rho.
+    alt_scale_height_flag = .true.
+
+! mixing length option
+    MLT_option = 'Cox'
+    mlt_gradT_fraction = -1
+    okay_to_reduce_gradT_excess = .false.
+
+! Defining a minimum diffusive mixing (applicable in the radiative zones)
+    set_min_D_mix = .true.
+    min_D_mix = 0d0
+    
+! Allow the use of another D_mix profile
+    use_other_D_mix = .false.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! OVERSHOOTING/CONVECTION CONTROL !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    use_Ledoux_criterion = .true.
+
+! overshooting in nunburning areas
+    overshoot_scheme(1) = 'exponential'
+    overshoot_zone_type(1) = 'any'
+    overshoot_zone_loc(1) = 'any'
+    overshoot_bdy_loc(1) = 'any'
+    overshoot_f(1) = 0.01
+    overshoot_f0(1) = 0.004
+
+! Overshooting shuts off when the exponential decay has dropped the diffusion coefficient to this level.
+    overshoot_D_min = 5d-2
+
+! Terminate overshoot region when encounter stabilizing composition gradient where (unsmoothed) brunt_B is greater than this limit.
+! (<= 0 means ignore this limit) note: both brunt_B and gradL_composition_term come from unsmoothed_brunt_B and differ only in optional smoothing.
+! (see num_cells_for_smooth_brunt_B and num_cells_for_smooth_gradL_composition_term).
+    overshoot_brunt_B_max = 0 !(default)
+
+    limit_overshoot_Hp_using_size_of_convection_zone = .true.
+    overshoot_alpha = -1						 ! (default) -1= use mixing_length_alpha
+
+! convective premixing
+    do_conv_premix = .true.
+
+
+
+! This is an option to smooth composition gradients in newly non-convective regions trailing behind a retreating convection zone.
+! This effectively erases (most) of the stair-casing that happens without it. 
+! But you should be aware that the smoothing process does not conserve species mass – e.g., if have retreating 
+! He burning core below H shell, then the smoothing will convert some H into He in the newly non-convective region 
+! (this can be hand waved away as modeling partial burning of those regions during the substep period before the convection had retreated past the location).
+! set this true to have the stair-casing removed at the price of some changes in abundances.
+    smooth_convective_bdy = .false.
+
+!!!!!!!!!!!!!!!!!!
+!! WHEN TO STOP !!
+!!!!!!!!!!!!!!!!!!
+
+! stop when the center mass fraction of he1 drops below this limit
+! backup stop, should for some reason stop near ZAMS don't work
+
+    xa_central_lower_limit_species(1) = 'h1'
+    xa_central_lower_limit(1) = 0.67d0
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! MESH & RESOLUTION CONTROLS !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! lower value increases number of grid points
+    mesh_delta_coeff = 0.3 
+    max_allowed_nz = 20000 
+    okay_to_remesh = .true.
+
+! Max size for cell as fraction of total mass
+    max_dq = 1d-3 
+
+!!!!!!!!!!!!!!!!!!!!
+!! OUTPUT OPTIONS !!
+!!!!!!!!!!!!!!!!!!!!
+
+! We don't need any photos
+    photo_interval = 10000!100000
+
+! history control
+    history_interval = 1
+
+! profile control
+    write_profiles_flag = .true.
+    profile_interval = 100000000
+    profile_data_suffix = '.data'
+    max_num_profile_models = 60000
+
+! Specify output for GYRE
+    pulse_data_format = 'GYRE'
+    write_pulse_data_with_profile = .true.
+    add_atmosphere_to_pulse_data = .true.
+    add_center_point_to_pulse_data = .true.
+    keep_surface_point_for_pulse_data = .true.
+    add_double_points_to_pulse_data = .true.
+    interpolate_rho_for_pulse_data = .true.
+    threshold_grad_mu_for_double_point = 5d0
+
+! Terminal Interval  
+    terminal_interval = 10
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! ASTEROSEISMOLOGY CONTROLS !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    num_cells_for_smooth_brunt_B = 0
+
+! if > 0, N^2 is smoothed, introducing noise in the period spacing patterns: we do not want this!
+    num_cells_for_smooth_gradL_composition_term = 0    
+    calculate_Brunt_N2 = .true.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!
+!! CONVERGENCE CONTROL !!
+!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    !Allows Eddingtom grey to proceed without issue
+    scale_max_correction=0.1d0
+
+!timestep control
+    varcontrol_target=8d-5 !3d-5
+
+!!!!!!!!!!!!!!!!!!!!!!!!!
+!! CONVERGENCE CONTROL !!
+!!!!!!!!!!!!!!!!!!!!!!!!!
+    log_directory = 'LOGS'
+
+
+/ ! end of controls namelist
+

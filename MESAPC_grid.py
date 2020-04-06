@@ -37,8 +37,6 @@ class MESAPC_grid():
         pool = mp.Pool(processes=3)
         for _ in tqdm.tqdm(pool.imap_unordered(utils.run_mesa, MESA_runs), total=len(MESA_runs)):
             pass
-        #with mp.Pool(4) as p:
-        #    p.starmap(utils.run_mesa, MESA_runs)
 
     def run_all(self):
         self.run()

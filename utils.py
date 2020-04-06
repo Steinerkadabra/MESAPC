@@ -1,7 +1,6 @@
 import f90nml
 import shutil
 import os
-import subprocess as sp
 import numpy as np
 
 
@@ -26,14 +25,11 @@ class cd:
         os.chdir(self.savedPath)
 
 
-def run_mesa(run_id):#(inlist, filebase_dir, output_dir, run_id):
+def run_mesa(run_id):
     inlist = run_id.inlist
     filebase_dir = run_id.filebase_dir
     output_dir = run_id.output_dir
     file = f90nml.read(inlist)
-    #try:
-    #    shutil.rmtree(output_dir + run_id.dir)
-    #except FileNotFoundError: pass
     shutil.copytree(f"{filebase_dir}/work", output_dir + run_id.dir)
     for key in run_id.controls_dict.keys():
         file["controls"][key]= run_id.controls_dict[key]
@@ -48,11 +44,10 @@ def run_mesa(run_id):#(inlist, filebase_dir, output_dir, run_id):
     f = open(output_dir + "/LOGS/" + run_id.log_dir + "/star_dict.txt", "w")
     f.write(str(run_id.star_dict))
     f.close()
-    #with cd(output_dir + run_id.dir):
-        #sp.call("ls", stdout=sp.PIPE)
-        #sp.call("./clean", shell = True, stdout=sp.PIPE)
-        #sp.call("./mk", stdout=sp.PIPE)
-        #sp.call("./star", stdout=sp.PIPE)
+    with cd(output_dir + run_id.dir):
+        sp.call("./clean", shell = True, stdout=sp.PIPE)
+        sp.call("./mk", stdout=sp.PIPE)
+        sp.call("./star", stdout=sp.PIPE)
 
 
 class run_identification():
