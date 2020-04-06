@@ -41,6 +41,11 @@ class MESAPC():
         if self.inlist == "default":
             self.inlist = self.filebase_dir + "inlist_project"
         shutil.copy(self.inlist, self.output_dir + "LOGS/")
+        if self.calculate_grid:
+            self.grid.run_all()
+        else:
+            for r in self.runs:
+                self.grid.run(r)
 
     def default_lists(self, type):
         defaults = open(os.environ["MESA_DIR"] + f"/star/defaults/{type}.defaults", 'r')
