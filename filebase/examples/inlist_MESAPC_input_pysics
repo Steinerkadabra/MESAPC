@@ -1,0 +1,23 @@
+!the goal of this calculations is to investigate the influence of the input physics (opacities in this case)
+
+&basics
+! We don't need to calculate the inlist, because we the grid with 'standard' values length will be part of run1
+	output_dir = "mixing_length_influence_low_mass"
+	calculate_grid = False
+
+/
+
+
+
+&grid
+	!We want to calculate the evolution for ten masses between 0.5 and 1 solar mass
+    initial_mass = "linspace,0.5,1,10"
+/ 
+
+
+&run1
+	!Lets see what we get for different opacity tables. We also want some different lowT prefixes.
+    kappa_file_prefix = "string,gn93,gs98,a09,OP_gs98,OP_a09"
+    kappa_lowT_prefix = "string,lowT_Freedman11,loT_af94_gn93,lowT_fa05_gs98"
+/ 
+
