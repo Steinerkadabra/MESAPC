@@ -1,0 +1,4 @@
+matplotlib
+numpy
+f90nml
+tqdm
