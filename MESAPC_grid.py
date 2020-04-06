@@ -34,7 +34,8 @@ class MESAPC_grid():
                                                 self.parent.filebase_dir, self.parent.output_dir)
             MESA_runs.append(r_id)
 
-        pool = mp.Pool(processes=3)
+        num = int(self.parent.TOTAL_NUM_THREADS/self.parent.NUM_THREADS)
+        pool = mp.Pool(processes=num)
         for _ in tqdm.tqdm(pool.imap_unordered(utils.run_mesa, MESA_runs), total=len(MESA_runs)):
             pass
 

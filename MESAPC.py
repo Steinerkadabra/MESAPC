@@ -13,7 +13,7 @@ class MESAPC():
             try:
                 basics, grid, runs = utils.read_file("inlist_MESAPC")
             except FileNotFoundError:
-                sys.exit("FATAL: No inlist_MESAPC in current directory. You will have to at least give the output dir and grid dictionary.")
+                sys.exit("FATAL: No inlist_MESAPC in current directory. If you are wokring with the MESAPC class, you will have to at least give the output dir and grid dictionary.")
             try:
                 self.output_dir = basics["output_dir"] + "/"
             except:
