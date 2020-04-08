@@ -9,13 +9,6 @@ This is a library to calculate a grid (or multiple grids) of [MESA](http://mesa.
 MESAPC makes use of of mulitple Python Libraries. To have this working properly, we strongly recommend working with a virtual environment. MESAPC has been developed in a Python 3.7 environment using the following packages:
 * f90nml 1.1.2
 * numpy 1.18.2
-* os
-* sys
-* utils
-* shutil
-* itertools
-* multiprocessing
-* utils
 * tqdm 4.45.0
 
 Older versions of these modules have not been tested. We don' know if they will work. 
