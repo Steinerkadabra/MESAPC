@@ -2,6 +2,7 @@ import f90nml
 import shutil
 import os
 import numpy as np
+import subprocess as sp
 
 
 class cd:
