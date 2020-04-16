@@ -147,7 +147,7 @@
 !!!!!!!!!!!!!!!!!!!!
 
 ! We don't need any photos
-    photo_interval = 10000!100000
+    photo_interval = 10000
 
 ! history control
     history_interval = 1
