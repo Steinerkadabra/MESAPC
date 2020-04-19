@@ -46,6 +46,7 @@ def run_mesa(run_id):
     f.write(str(run_id.star_dict))
     f.close()
     with cd(output_dir + run_id.dir):
+        print(os.environ["OMP_NUM_THREADS"])
         sp.call("./clean", shell = True, stdout=sp.PIPE)
         sp.call("./mk", stdout=sp.PIPE)
         sp.call("./rn", stdout=sp.PIPE)
