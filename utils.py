@@ -46,8 +46,8 @@ def run_mesa(run_id):
     f.write(str(run_id.star_dict))
     f.close()
     with cd(output_dir + run_id.dir):
-        print(str(run_id.OMP_NUM_THREADS))
-        os.environ["OMP_NUM_THREADS"] = str(run_id.OMP_NUM_THREADS)
+        #print(str(run_id.OMP_NUM_THREADS))
+        #os.environ["OMP_NUM_THREADS"] = str(run_id.OMP_NUM_THREADS)
         print(os.environ["OMP_NUM_THREADS"])
         sp.call("./clean", shell = True, stdout=sp.PIPE)
         sp.call("./mk", stdout=sp.PIPE)
@@ -84,10 +84,10 @@ def read_values(string):
 
 def basics_default():
     b = {
-        "NUM_THREADS": 2,
+        "num_threads": 2,
         "filebase" : os.environ["MESAPC_DIR"] + "/filebase/",
         "calculate_grid": True,
-        "TOTAL_NUM_THREADS": 10,
+        "total_num_threads": 10,
         "inlist": "default"
     }
     return b
