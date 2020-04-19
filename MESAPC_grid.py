@@ -31,7 +31,7 @@ class MESAPC_grid():
                                                 self.parent.inlist, self.parent.filebase_dir, self.parent.output_dir, self.parent.NUM_THREADS)
             else:
                 r_id = utils.run_identification(f"grid_{i+1}", c, s, f"grid_{i+1}", self.parent.inlist,
-                                                self.parent.filebase_dir, self.parent.output_dir)
+                                                self.parent.filebase_dir, self.parent.output_dir, self.parent.NUM_THREADS)
             MESA_runs.append(r_id)
 
         num = int(self.parent.TOTAL_NUM_THREADS/self.parent.NUM_THREADS)
