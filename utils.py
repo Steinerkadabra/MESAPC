@@ -97,6 +97,7 @@ def read_file(string):
     file = f90nml.read(string)
     b = basics_default()
     for key in file["basics"].keys():
+        print(key, file["basics"][key])
         b[key] = file["basics"][key]
     grid = {}
     for key in file["grid"].keys():
