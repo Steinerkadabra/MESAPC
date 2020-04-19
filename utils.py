@@ -49,6 +49,7 @@ def run_mesa(run_id):
         sp.call("./clean", shell = True, stdout=sp.PIPE)
         sp.call("./mk", stdout=sp.PIPE)
         sp.call("./star", stdout=sp.PIPE)
+    return
 
 
 class run_identification():
