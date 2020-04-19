@@ -28,7 +28,7 @@ class MESAPC_grid():
             c, s = self.parent.split_dict(d, output="dict")
             if  run != None:
                 r_id = utils.run_identification(f"run{run.run_number}_{i + 1}", c, s, f"run{run.run_number}_{i + 1}",
-                                                self.parent.inlist, self.parent.filebase_dir, self.parent.output_dir)
+                                                self.parent.inlist, self.parent.filebase_dir, self.parent.output_dir, self.parent.NUM_THREADS)
             else:
                 r_id = utils.run_identification(f"grid_{i+1}", c, s, f"grid_{i+1}", self.parent.inlist,
                                                 self.parent.filebase_dir, self.parent.output_dir)

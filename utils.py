@@ -46,6 +46,7 @@ def run_mesa(run_id):
     f.write(str(run_id.star_dict))
     f.close()
     with cd(output_dir + run_id.dir):
+        os.environ["OMP_NUM_THREADS"] = str(run_id.OMP_NUM_THREDS)
         print(os.environ["OMP_NUM_THREADS"])
         sp.call("./clean", shell = True, stdout=sp.PIPE)
         sp.call("./mk", stdout=sp.PIPE)
@@ -54,7 +55,7 @@ def run_mesa(run_id):
 
 
 class run_identification():
-    def __init__(self, dir, controls_dict, star_dict, log_dir, inlist, filebase_dir, output_dir):
+    def __init__(self, dir, controls_dict, star_dict, log_dir, inlist, filebase_dir, output_dir, num_threads):
         self.dir = dir
         self.controls_dict = controls_dict
         self.star_dict = star_dict
@@ -62,6 +63,7 @@ class run_identification():
         self.inlist = inlist
         self.filebase_dir = filebase_dir
         self.output_dir = output_dir
+        self.OMP_NUM_THREDS = num_threads
 
 class run_info():
     def __init__(self, run_dict, run_number):
