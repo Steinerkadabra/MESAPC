@@ -48,7 +48,7 @@ def run_mesa(run_id):
     with cd(output_dir + run_id.dir):
         sp.call("./clean", shell = True, stdout=sp.PIPE)
         sp.call("./mk", stdout=sp.PIPE)
-        sp.call("./star", stdout=sp.PIPE)
+        sp.call("./rn", stdout=sp.PIPE)
     return
 
 
