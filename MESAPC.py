@@ -19,7 +19,6 @@ class MESAPC():
             except:
                 sys.exit("FATAL: output dir not specified in_MESAPC.")
             self.calculate_grid = basics["calculate_grid"]
-            print('basics num threads is, ', basics["num_threads"])
             self.NUM_THREADS = basics["num_threads"]
             self.TOTAL_NUM_THREADS=basics["total_num_threads"]
             self.runs = runs

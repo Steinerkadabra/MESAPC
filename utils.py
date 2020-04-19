@@ -46,9 +46,6 @@ def run_mesa(run_id):
     f.write(str(run_id.star_dict))
     f.close()
     with cd(output_dir + run_id.dir):
-        #print(str(run_id.OMP_NUM_THREADS))
-        #os.environ["OMP_NUM_THREADS"] = str(run_id.OMP_NUM_THREADS)
-        print(os.environ["OMP_NUM_THREADS"])
         sp.call("./clean", shell = True, stdout=sp.PIPE)
         sp.call("./mk", stdout=sp.PIPE)
         sp.call("./rn", stdout=sp.PIPE)
@@ -97,7 +94,6 @@ def read_file(string):
     file = f90nml.read(string)
     b = basics_default()
     for key in file["basics"].keys():
-        print(key, file["basics"][key])
         b[key] = file["basics"][key]
     grid = {}
     for key in file["grid"].keys():
