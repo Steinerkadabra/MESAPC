@@ -46,10 +46,10 @@ def run_mesa(run_id):
     f.write(str(run_id.star_dict))
     f.close()
     with cd(output_dir + run_id.dir):
-        sp.call("./clean", shell = True, stdout=sp.PIPE)
-        sp.call("./mk", stdout=sp.PIPE)
-        #sp.call("./star", stdout=sp.PIPE)
-        os.system("./star")
+        sp.call("./clean", shell = True)
+        sp.call("./mk")
+        sp.call("./star")
+        #os.system("./star")
     return
 
 
