@@ -46,9 +46,9 @@ def run_mesa(run_id):
     f.write(str(run_id.star_dict))
     f.close()
     with cd(output_dir + run_id.dir):
-        sp.call("./clean", shell = True)
-        sp.call("./mk")
-        sp.call("./star")
+        sp.call("./clean", shell = True, stderr=sp.DEVNULL, stdout=sp.DEVNULL)
+        sp.call("./mk", stderr=sp.DEVNULL, stdout=sp.DEVNULL)
+        sp.call("./star", stderr=sp.DEVNULL, stdout=sp.DEVNULL)
         #os.system("./star")
     return
 
