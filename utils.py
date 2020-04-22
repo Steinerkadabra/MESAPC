@@ -78,6 +78,8 @@ def read_values(string):
         return input[1:]
     elif input[0] == "linspace":
         return np.linspace(float(input[1]), float(input[2]), int(input[3]))
+    elif input[0] == "logspace":
+        return 10**(np.linspace(np.log10(float(input[1])), np.log10(float(input[2])), int(input[3])))
 
 def basics_default():
     b = {

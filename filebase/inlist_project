@@ -26,7 +26,7 @@
     save_photo_when_terminate = .false.
 
 ! display on-screen plots
-    pgstar_flag = .true.
+    pgstar_flag = .false.
 
 ! Avoid printing a lot of stuff in the terminal to begin with. We don't need this.
     show_log_description_at_start = .false.
@@ -79,8 +79,6 @@
     set_min_D_mix = .true.
     min_D_mix = 0d0
     
-! Allow the use of another D_mix profile
-    use_other_D_mix = .false.
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! OVERSHOOTING/CONVECTION CONTROL !!
@@ -108,8 +106,6 @@
 
 ! convective premixing
     do_conv_premix = .true.
-
-
 
 ! This is an option to smooth composition gradients in newly non-convective regions trailing behind a retreating convection zone.
 ! This effectively erases (most) of the stair-casing that happens without it. 
@@ -189,10 +185,10 @@
     scale_max_correction=0.1d0
 
 !timestep control
-    varcontrol_target=8d-5 !3d-5
+    varcontrol_target=5d-5 !3d-5
 
 !!!!!!!!!!!!!!!!!!!!!!!!!
-!! CONVERGENCE CONTROL !!
+!! MESAPC OUTPUT       !!
 !!!!!!!!!!!!!!!!!!!!!!!!!
     log_directory = 'LOGS'
 
