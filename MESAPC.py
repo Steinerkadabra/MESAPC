@@ -41,6 +41,8 @@ class MESAPC():
         if self.inlist == "default":
             self.inlist = self.filebase_dir + "inlist_project"
         shutil.copy(self.inlist, self.output_dir + "LOGS/")
+        if output_dir == None and grid == None:
+            shutil.copy("inlist_MESAPC", self.output_dir + "LOGS/")
         if self.calculate_grid:
             self.grid.run_all()
         else:
