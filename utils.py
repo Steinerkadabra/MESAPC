@@ -49,7 +49,6 @@ def run_mesa(run_id):
         sp.call("./clean", shell = True, stderr=sp.DEVNULL, stdout=sp.DEVNULL)
         sp.call("./mk", stderr=sp.DEVNULL, stdout=sp.DEVNULL)
         sp.call("./star", stderr=sp.DEVNULL, stdout=sp.DEVNULL)
-        #os.system("./star")
     return
 
 
