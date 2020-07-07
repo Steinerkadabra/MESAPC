@@ -1,16 +1,12 @@
 ! Base inlist for running the stars in our stellar grid
 
 &star_job
-! Avoid printing a lot of stuff in terminal when we start a run
-    show_log_description_at_start=.false.
-
 ! begin with a pre-main sequence model
     create_pre_main_sequence_model = .true.
-    pre_ms_relax_num_steps = 100
 
 ! some way to deal with nuclear reaction networks
     change_net = .true.
-    new_net_name = 'pp_and_cno_extras.net'
+    new_net_name = 'basic.net'
     change_initial_net = .true.
 
 ! initial mixture and opacities
@@ -21,18 +17,12 @@
     initial_he3 = 8.494422310803355d-5
     initial_he4 = 0.279915166 
 
-! neither save a model nor a photo when terminating the run
-    save_model_when_terminate = .false.
-    save_photo_when_terminate = .false.
 
 ! display on-screen plots
     pgstar_flag = .false.
 
-! Avoid printing a lot of stuff in the terminal to begin with. We don't need this.
-    show_log_description_at_start = .false.
-
 ! Opacity tables to use
-    kappa_file_prefix = 'OP_a09_nans_removed_by_hand' 
+    !kappa_file_prefix = 'OP_a09' 
     kappa_lowT_prefix = 'lowT_Freedman11'
 
 
@@ -50,7 +40,6 @@
 ! initial metallicity
 ! metals set according to initial_zfracs
     initial_z = 0.02     ! default = 0.02
-    !initial_y = 0.28     ! default = -1 ( 0.24+2*initial_z)
 
 
 ! Atmosphere Option
@@ -70,10 +59,6 @@
 ! If false, then stick to the usual definition – P/(g*rho). If true, use min of the usual and sound speed * hydro time scale, sqrt(P/G)/rho.
     alt_scale_height_flag = .true.
 
-! mixing length option
-    MLT_option = 'Cox'
-    mlt_gradT_fraction = -1
-    okay_to_reduce_gradT_excess = .false.
 
 ! Defining a minimum diffusive mixing (applicable in the radiative zones)
     set_min_D_mix = .true.
@@ -96,13 +81,7 @@
 ! Overshooting shuts off when the exponential decay has dropped the diffusion coefficient to this level.
     overshoot_D_min = 5d-2
 
-! Terminate overshoot region when encounter stabilizing composition gradient where (unsmoothed) brunt_B is greater than this limit.
-! (<= 0 means ignore this limit) note: both brunt_B and gradL_composition_term come from unsmoothed_brunt_B and differ only in optional smoothing.
-! (see num_cells_for_smooth_brunt_B and num_cells_for_smooth_gradL_composition_term).
-    overshoot_brunt_B_max = 0 !(default)
-
-    limit_overshoot_Hp_using_size_of_convection_zone = .true.
-    overshoot_alpha = -1						 ! (default) -1= use mixing_length_alpha
+			 ! (default) -1= use mixing_length_alpha
 
 ! convective premixing
     do_conv_premix = .true.
@@ -123,20 +102,8 @@
 ! backup stop, should for some reason stop near ZAMS don't work
 
     xa_central_lower_limit_species(1) = 'h1'
-    xa_central_lower_limit(1) = 0.67d0
+    xa_central_lower_limit(1) = 0.68d0
 
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! MESH & RESOLUTION CONTROLS !!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-! lower value increases number of grid points
-    mesh_delta_coeff = 0.3 
-    max_allowed_nz = 20000 
-    okay_to_remesh = .true.
-
-! Max size for cell as fraction of total mass
-    max_dq = 1d-3 
 
 !!!!!!!!!!!!!!!!!!!!
 !! OUTPUT OPTIONS !!
@@ -148,11 +115,6 @@
 ! history control
     history_interval = 1
 
-! profile control
-    write_profiles_flag = .true.
-    profile_interval = 100000000
-    profile_data_suffix = '.data'
-    max_num_profile_models = 60000
 
 ! Specify output for GYRE
     pulse_data_format = 'GYRE'
@@ -164,8 +126,7 @@
     interpolate_rho_for_pulse_data = .true.
     threshold_grad_mu_for_double_point = 5d0
 
-! Terminal Interval  
-    terminal_interval = 10
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! ASTEROSEISMOLOGY CONTROLS !!
