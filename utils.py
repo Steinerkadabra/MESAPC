@@ -108,7 +108,7 @@ def read_file(string):
             run_dict = {}
             for key in file[keys[r]].keys():
                 run_dict[key] = read_values(file[keys[r]][key])
-                runs.append(run_info(run_dict, count))
-                count +=1
+            runs.append(run_info(run_dict, count))
+            count +=1
     return b, grid, runs
 
