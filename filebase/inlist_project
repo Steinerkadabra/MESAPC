@@ -1,29 +1,45 @@
 ! Base inlist for running the stars in our stellar grid
 
 &star_job
-! begin with a pre-main sequence model
-    create_pre_main_sequence_model = .true.
+! Avoid printing a lot of stuff in terminal when we start a run
+	show_log_description_at_start=.false.
 
-! some way to deal with nuclear reaction networks
-    change_net = .true.
-    new_net_name = 'basic.net'
-    change_initial_net = .true.
+! set initial composition and nuclear reaction network
+  	set_uniform_initial_composition = .true.
+  	initial_zfracs = 8 
+  	initial_h1 = 0.7004353948005046
+  	initial_h2 = 0.000020                     !set in run_star_extras
+  	initial_he3 = 0.0000279481
+  	initial_he4 = 0.2794532307
+	change_net = .true.
+	new_net_name = 'pp_extras.net' 
+	change_initial_net = .true.
+	set_initial_age = .true.
+	set_initial_model_number = .true.
+	set_initial_cumulative_energy_error = .true.
 
-! initial mixture and opacities
-    initial_zfracs=8
-    set_uniform_initial_composition=.true.
-    initial_h1 = 0.6999724223938222d0  
-    initial_h2 = 2.7577606177794738d-5 
-    initial_he3 = 8.494422310803355d-5
-    initial_he4 = 0.279915166 
-
+! load initial_seed_model
+	create_pre_main_sequence_model = .true.
 
 ! display on-screen plots
-    pgstar_flag = .false.
+	pgstar_flag = .true.
 
-! Opacity tables to use
-    !kappa_file_prefix = 'OP_a09' 
-    kappa_lowT_prefix = 'lowT_Freedman11'
+! change form lnd to lnPgas
+	change_lnPgas_flag = .true.
+	new_lnPgas_flag = .true.
+
+! set opacity tables
+	kappa_file_prefix = 'OP_gs98'
+	kappa_lowT_prefix = 'lowT_Freedman11'
+
+
+
+! startup
+	set_initial_dt = .true.
+	years_for_initial_dt = 1d-4
+
+	change_conv_vel_flag = .true.
+	new_conv_vel_flag = .true.
 
 
 / !end of star_job namelist
@@ -31,128 +47,109 @@
 
 &controls
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! STELLAR MODEL CONTROLS !!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    initial_mass = 1
-
-! initial metallicity
-! metals set according to initial_zfracs
-    initial_z = 0.02     ! default = 0.02
+	xa_central_lower_limit_species(1) = 'h1'
+	xa_central_lower_limit(1) = 0.68
 
 
-! Atmosphere Option
-    atm_option = 'T_tau'
-    atm_T_tau_relation = 'Eddington'
-    atm_T_tau_opacity = 'varying'
-    atm_T_tau_errtol = 1d-9
-
-
-!!!!!!!!!!!!!!!!!!!!!
-!! MIXING CONTROLS !!
-!!!!!!!!!!!!!!!!!!!!!
-
-    mixing_length_alpha = 1.8    
-    remove_small_D_limit = 1d-6
-
-! If false, then stick to the usual definition – P/(g*rho). If true, use min of the usual and sound speed * hydro time scale, sqrt(P/G)/rho.
-    alt_scale_height_flag = .true.
-
-
-! Defining a minimum diffusive mixing (applicable in the radiative zones)
-    set_min_D_mix = .true.
-    min_D_mix = 0d0
-    
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! OVERSHOOTING/CONVECTION CONTROL !!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    use_Ledoux_criterion = .true.
-
-! overshooting in nunburning areas
-    overshoot_scheme(1) = 'exponential'
-    overshoot_zone_type(1) = 'any'
-    overshoot_zone_loc(1) = 'any'
-    overshoot_bdy_loc(1) = 'any'
-    overshoot_f(1) = 0.01
-    overshoot_f0(1) = 0.004
-
-! Overshooting shuts off when the exponential decay has dropped the diffusion coefficient to this level.
-    overshoot_D_min = 5d-2
-
-			 ! (default) -1= use mixing_length_alpha
-
-! convective premixing
-    do_conv_premix = .true.
-
-! This is an option to smooth composition gradients in newly non-convective regions trailing behind a retreating convection zone.
-! This effectively erases (most) of the stair-casing that happens without it. 
-! But you should be aware that the smoothing process does not conserve species mass – e.g., if have retreating 
-! He burning core below H shell, then the smoothing will convert some H into He in the newly non-convective region 
-! (this can be hand waved away as modeling partial burning of those regions during the substep period before the convection had retreated past the location).
-! set this true to have the stair-casing removed at the price of some changes in abundances.
-    smooth_convective_bdy = .false.
-
-!!!!!!!!!!!!!!!!!!
-!! WHEN TO STOP !!
-!!!!!!!!!!!!!!!!!!
-
-! stop when the center mass fraction of he1 drops below this limit
-! backup stop, should for some reason stop near ZAMS don't work
-
-    xa_central_lower_limit_species(1) = 'h1'
-    xa_central_lower_limit(1) = 0.68d0
-
-
-!!!!!!!!!!!!!!!!!!!!
-!! OUTPUT OPTIONS !!
-!!!!!!!!!!!!!!!!!!!!
-
-! We don't need any photos
-    photo_interval = 10000
-
-! history control
-    history_interval = 1
-
-
-! Specify output for GYRE
-    pulse_data_format = 'GYRE'
-    write_pulse_data_with_profile = .true.
-    add_atmosphere_to_pulse_data = .true.
-    add_center_point_to_pulse_data = .true.
-    keep_surface_point_for_pulse_data = .true.
-    add_double_points_to_pulse_data = .true.
-    interpolate_rho_for_pulse_data = .true.
-    threshold_grad_mu_for_double_point = 5d0
+	!run_star_extras_controls
 
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! ASTEROSEISMOLOGY CONTROLS !!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	timestep_factor_for_retries = 0.9
+	min_timestep_factor = 0.7
+	max_timestep_factor = 1.1
 
-    num_cells_for_smooth_brunt_B = 0
-
-! if > 0, N^2 is smoothed, introducing noise in the period spacing patterns: we do not want this!
-    num_cells_for_smooth_gradL_composition_term = 0    
-    calculate_Brunt_N2 = .true.
-
-!!!!!!!!!!!!!!!!!!!!!!!!!
-!! CONVERGENCE CONTROL !!
-!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    !Allows Eddingtom grey to proceed without issue
-    scale_max_correction=0.1d0
-
-!timestep control
-    varcontrol_target=5d-5 !3d-5
-
-!!!!!!!!!!!!!!!!!!!!!!!!!
-!! MESAPC OUTPUT       !!
-!!!!!!!!!!!!!!!!!!!!!!!!!
-    log_directory = 'LOGS'
+	! output controls
+	history_interval = 1
 
 
+	! Atmopheres controls
+
+      	atm_option = 'table'
+        atm_table = 'tau_100'
+
+	!mixing controls
+
+	set_min_D_mix = .true.
+    	min_D_mix = 0d0
+  	mixing_length_alpha = 1.9050629261   
+
+	! convective premixing
+    	use_Ledoux_criterion = .true.
+
+
+
+	! mesh options
+	max_dq=3d-4  
+	max_surface_cell_dq = 1d-8 
+
+
+
+
+	!overshooting options
+     	overshoot_scheme(1) = 'exponential'
+      	overshoot_zone_type(1) = 'any'
+      	overshoot_zone_loc(1) = 'any'
+      	overshoot_bdy_loc(1) = 'top'
+      	overshoot_f(1) = 0.016
+      	overshoot_f0(1) = 0.008
+
+      	overshoot_scheme(2) = 'exponential'
+      	overshoot_zone_type(2) = 'any'
+      	overshoot_zone_loc(2) = 'shell'
+      	overshoot_bdy_loc(2) = 'bottom'
+      	overshoot_f(2) = 0.016
+      	overshoot_f0(2) = 0.008
+
+	overshoot_D_min = 5d-3
+
+	min_convective_gap = 1.0
+	min_thermohaline_gap = 1.0
+	min_semiconvection_gap = 1.0
+	limit_for_rel_error_in_energy_conservation = 1d4
+	hard_limit_for_rel_error_in_energy_conservation = 1d4
+	max_abs_rel_run_E_err = 1d0
+      	include_L_in_error_est = .false.
+      	include_v_in_error_est = .false.
+	varcontrol_target = 1d-4
+
+      	always_use_dedt_form_of_energy_eqn = .false.
+	use_eps_grav_future = .true.
+	make_gradr_sticky_in_newton_iters = .true.
+	
+      	use_dedt_form_with_total_energy_conservation = .false.
+      	always_use_eps_grav_form_of_energy_eqn = .true. 
+	smooth_convective_bdy = .false.
+ 	conv_premix_avoid_increase = .true.
+	width_for_limit_conv_vel = 3
+	prune_bad_cz_min_Hp_height = 1.0
+ 	prune_bad_cz_min_log_eps_nuc = 99
+	alpha_semiconvection = 1.8
+	thermohaline_coeff = 1.8
+	okay_to_reduce_gradT_excess = .true.
+
+	max_resid_jump_limit = 1d99
+	ignore_too_large_correction = .true.
+
+
+      	max_q_for_k_below_const_q = 0.95
+      	min_q_for_k_below_const_q = 0.9
+      	min_q_for_k_const_mass = 0.9
+      	max_q_for_k_const_mass = 0.95
+	min_dxm_Eulerian_div_dxm_added = 100
+	
+	max_allowed_nz = 10000000
+
+
+	redo_conv_for_dr_lt_mixing_length = .true.
+
+	delta_lgL_limit = 0.001d0
+	delta_lgT_limit = 0.005d0
+	delta_lgL_hard_limit = 0.005d0
+	delta_lgT_hard_limit = 0.02d0
+
+
+
+	
 / ! end of controls namelist
 

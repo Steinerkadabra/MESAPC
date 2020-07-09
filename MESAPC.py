@@ -58,7 +58,7 @@ class MESAPC():
             if len(line) == 0:
                 continue
             if line[0] != "!":
-                pvals.append(line.split(" ")[0])
+                pvals.append(line.split(" ")[0].lower())
         return pvals
 
     def split_dict(self, grid, run={}, output="array"):

@@ -129,14 +129,14 @@
 
 
 !# Thermodynamics
-   !temperature ! temperature at center of zone
+   temperature ! temperature at center of zone
    !logT_face ! log10(temperature) at outer boundary of zone
    !logT_bb ! log10(black body temperature) at outer boundary of zone
    !logT_face_div_logT_bb
 
    !energy ! internal energy (ergs/g)
    !logE ! log10(specific internal energy) at center of zone
-   !rho ! density
+   rho ! density
    !density ! rho
 
    !entropy ! specific entropy divided by (avo*kerg)
@@ -266,14 +266,14 @@
    !z2bar ! average charge^2
    !ye  ! average charge per baryon = proton fraction
 
-   !x ! hydrogen mass fraction
+   x ! hydrogen mass fraction
    !log_x
-   !y ! helium mass fraction
+   y ! helium mass fraction
    !log_y
-   !z ! metallicity
+   z ! metallicity
    !log_z ! metallicity
 
-   !add_abundances ! this adds all of the isos that are in the current net
+   add_abundances ! this adds all of the isos that are in the current net
    ! NOTE: you can list specific isotopes by giving their names (from chem_def)
    !h1
    !he3
@@ -336,7 +336,7 @@
 
 
 !# Opacity
-   !opacity ! opacity measured at center of zone
+   opacity ! opacity measured at center of zone
    !log_opacity ! log10(opacity)
    !dkap_dlnrho_face ! partial derivative of opacity wrt. ln rho (at T=const) at outer edge of cell
       !  (was previously called dkap_dlnrho_at_face)
@@ -346,7 +346,7 @@
 
 
 !# Luminosity 
-   !luminosity ! luminosity at outer boundary of zone (in Lsun units)
+   luminosity ! luminosity at outer boundary of zone (in Lsun units)
    !logL ! log10(max(1d-2,L/Lsun))
    !log_Lrad
    !log_Ledd ! log10(Leddington/Lsun) -- local Ledd, 4 pi clight G m / kap
@@ -373,7 +373,7 @@
    !mlt_mixing_type ! value returned by mlt
    !conv_dP_term ! P is increased by factor (1 + conv_dP_term) by inclusion of convective turbulence
 
-   !conv_vel ! convection velocity (cm/sec)
+   conv_vel ! convection velocity (cm/sec)
    !log_conv_vel ! log10 convection velocity (cm/sec)
    !log_tau_conv_yrs ! timescale for change of conv velocity
 
@@ -434,7 +434,7 @@
 
 
 !# Mixing
-   !mixing_type ! mixing types are defined in mesa/const/public/const_def   
+   mixing_type ! mixing types are defined in mesa/const/public/const_def   
    !log_D_mix ! log10 diffusion coefficient for mixing in units of cm^2/second (Eulerian)
    !log_D_mix_non_rotation
 
@@ -457,7 +457,7 @@
 
 
 !# Optical Depth
-   !tau ! optical depth
+   tau ! optical depth
    !log_column_depth ! log10 column depth, exterior mass / area (g cm^-2)
    !log_radial_depth ! log10 radial distance to surface (cm)
    !logtau ! log10(optical depth) at center of zone

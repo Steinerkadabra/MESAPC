@@ -1196,7 +1196,7 @@
 
    !## backups and retries
       num_retries ! total during the run
-      num_backups ! total during the run
+      !num_backups ! total during the run
 
    !## solver iterations
 
