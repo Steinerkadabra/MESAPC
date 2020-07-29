@@ -23,6 +23,7 @@ class MESAPC():
             self.TOTAL_NUM_THREADS=basics["total_num_threads"]
             self.runs = runs
             self.inlist = basics["inlist"]
+            self.work_dir = basics["work_dir"]
             self.grid = grid
         else:
             self.output_dir = output_dir + "/"
@@ -38,6 +39,8 @@ class MESAPC():
         os.environ["OMP_NUM_THREADS"] = str(self.NUM_THREADS)
         self.grid = self.get_grid(self.grid)
         self.filebase_dir = os.environ["MESAPC_DIR"] + "/filebase/"
+        if self.work_dir == "default":
+            self.work_dir = os.environ["MESAPC_DIR"] + "/filebase/work"
         if self.inlist == "default":
             self.inlist = self.filebase_dir + "inlist_project"
         shutil.copy(self.inlist, self.output_dir + "LOGS/")

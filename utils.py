@@ -28,10 +28,9 @@ class cd:
 
 def run_mesa(run_id):
     inlist = run_id.inlist
-    filebase_dir = run_id.filebase_dir
     output_dir = run_id.output_dir
     file = f90nml.read(inlist)
-    shutil.copytree(f"{filebase_dir}/work", output_dir + run_id.dir)
+    shutil.copytree(run_id.work_dir, output_dir + run_id.dir)
     for key in run_id.controls_dict.keys():
         file["controls"][key]= run_id.controls_dict[key]
     for key in run_id.star_dict.keys():
@@ -53,13 +52,14 @@ def run_mesa(run_id):
 
 
 class run_identification():
-    def __init__(self, dir, controls_dict, star_dict, log_dir, inlist, filebase_dir, output_dir, num_threads):
+    def __init__(self, dir, controls_dict, star_dict, log_dir, inlist, filebase_dir, output_dir, num_threads, work_dir):
         self.dir = dir
         self.controls_dict = controls_dict
         self.star_dict = star_dict
         self.log_dir = log_dir
         self.inlist = inlist
         self.filebase_dir = filebase_dir
+        self.work_dir = work_dir
         self.output_dir = output_dir
         self.OMP_NUM_THREADS = num_threads
 
@@ -87,7 +87,8 @@ def basics_default():
         "filebase" : os.environ["MESAPC_DIR"] + "/filebase/",
         "calculate_grid": True,
         "total_num_threads": 10,
-        "inlist": "default"
+        "inlist": "default",
+        "work_dir": "default"
     }
     return b
 
