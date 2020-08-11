@@ -1,6 +1,6 @@
 import itertools
 import multiprocessing as mp
-import utils
+import MESAPC._MESAPC.utils as utils
 import tqdm
 
 
@@ -107,7 +107,6 @@ class MESAPC_grid():
 
         num = int(self.parent.TOTAL_NUM_THREADS/self.parent.NUM_THREADS)
         pool = mp.Pool(processes=num)
-        print(MESA_runs)
         for _ in tqdm.tqdm(pool.imap_unordered(utils.run_mesa, MESA_runs), total=len(MESA_runs), smoothing=0):
             pass
 

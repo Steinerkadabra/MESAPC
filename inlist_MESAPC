@@ -1,0 +1,21 @@
+&basics
+	output_dir = "test"
+	calculate_grid = False
+
+/
+
+
+&grid
+    initial_mass = "linspace,2,10,3"
+    initial_zfracs = "int,1,2,3,4,5"
+    x_ctrl(1) = "float,3.14"
+    x_ctrl(2) = "linspace,10,100,100"
+/ 
+
+&run1
+    mixing_length_alpha = "linspace,1.6,2,3"
+/ 
+
+&run2
+	accrete_same_as_surface = "string,True,False"
+/

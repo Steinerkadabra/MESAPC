@@ -47,107 +47,12 @@
 
 &controls
 
+	initial_mass = 1
+
 	xa_central_lower_limit_species(1) = 'h1'
 	xa_central_lower_limit(1) = 0.68
-
-
-	!run_star_extras_controls
-
-
-
-	timestep_factor_for_retries = 0.9
-	min_timestep_factor = 0.7
-	max_timestep_factor = 1.1
-
-	! output controls
-	history_interval = 1
-
-
-	! Atmopheres controls
-
-      	atm_option = 'table'
-        atm_table = 'tau_100'
-
-	!mixing controls
-
-	set_min_D_mix = .true.
-    	min_D_mix = 0d0
-  	mixing_length_alpha = 1.9050629261   
-
-	! convective premixing
-    	use_Ledoux_criterion = .true.
-
-
-
-	! mesh options
-	max_dq=3d-4  
-	max_surface_cell_dq = 1d-8 
-
-
-
-
-	!overshooting options
-     	overshoot_scheme(1) = 'exponential'
-      	overshoot_zone_type(1) = 'any'
-      	overshoot_zone_loc(1) = 'any'
-      	overshoot_bdy_loc(1) = 'top'
-      	overshoot_f(1) = 0.016
-      	overshoot_f0(1) = 0.008
-
-      	overshoot_scheme(2) = 'exponential'
-      	overshoot_zone_type(2) = 'any'
-      	overshoot_zone_loc(2) = 'shell'
-      	overshoot_bdy_loc(2) = 'bottom'
-      	overshoot_f(2) = 0.016
-      	overshoot_f0(2) = 0.008
-
-	overshoot_D_min = 5d-3
-
-	min_convective_gap = 1.0
-	min_thermohaline_gap = 1.0
-	min_semiconvection_gap = 1.0
-	limit_for_rel_error_in_energy_conservation = 1d4
-	hard_limit_for_rel_error_in_energy_conservation = 1d4
-	max_abs_rel_run_E_err = 1d0
-      	include_L_in_error_est = .false.
-      	include_v_in_error_est = .false.
-	varcontrol_target = 1d-4
-
-      	always_use_dedt_form_of_energy_eqn = .false.
-	use_eps_grav_future = .true.
-	make_gradr_sticky_in_newton_iters = .true.
-	
-      	use_dedt_form_with_total_energy_conservation = .false.
-      	always_use_eps_grav_form_of_energy_eqn = .true. 
-	smooth_convective_bdy = .false.
- 	conv_premix_avoid_increase = .true.
-	width_for_limit_conv_vel = 3
-	prune_bad_cz_min_Hp_height = 1.0
- 	prune_bad_cz_min_log_eps_nuc = 99
-	alpha_semiconvection = 1.8
-	thermohaline_coeff = 1.8
-	okay_to_reduce_gradT_excess = .true.
-
-	max_resid_jump_limit = 1d99
-	ignore_too_large_correction = .true.
-
-
-      	max_q_for_k_below_const_q = 0.95
-      	min_q_for_k_below_const_q = 0.9
-      	min_q_for_k_const_mass = 0.9
-      	max_q_for_k_const_mass = 0.95
-	min_dxm_Eulerian_div_dxm_added = 100
-	
-	max_allowed_nz = 10000000
-
-
-	redo_conv_for_dr_lt_mixing_length = .true.
-
-	delta_lgL_limit = 0.001d0
-	delta_lgT_limit = 0.005d0
-	delta_lgL_hard_limit = 0.005d0
-	delta_lgT_hard_limit = 0.02d0
-
+	x_ctrl(1) = 0
+	x_ctrl(2) = 0
 
 
 	

@@ -1,7 +1,7 @@
 import os
 import sys
-import MESAPC_grid
-import utils
+import MESAPC._MESAPC.MESAPC_grid as MESAPC_grid
+import MESAPC._MESAPC.utils as utils
 import shutil
 
 
@@ -34,7 +34,11 @@ class MESAPC():
                 for r in range(len(runs)):
                     self.runs.append(utils.run_info(runs[r], r+1))
             self.inlist = inlist
-        os.mkdir(self.output_dir)
+        try:
+            os.mkdir(self.output_dir)
+        except FileExistsError:
+            sys.exit(
+                "FATAL: output dir already exist!")
         os.mkdir(self.output_dir + "/LOGS/")
         os.environ["OMP_NUM_THREADS"] = str(self.NUM_THREADS)
         self.grid = self.get_grid(self.grid)
