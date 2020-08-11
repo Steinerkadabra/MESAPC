@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import data_handler
 
+
+
 handler = data_handler.DataHandler()
 
 fig, ax = plt.subplots(figsize = (12,8))
@@ -24,3 +26,4 @@ while True:
     plt.draw()
     plt.pause(1)
     ax.clear()
+
