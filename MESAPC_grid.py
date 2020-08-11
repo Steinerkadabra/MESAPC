@@ -15,12 +15,83 @@ class MESAPC_grid():
     def run(self, run = None):
         MESA_runs = []
         if run != None:
+            vals_new  = []
+            indices = []
+            current_index = 0
+            for val in self.control_vals:
+                if isinstance(val[0], list):
+                    indices_list = ()
+                    for val2 in val:
+                        vals_new.append(val2)
+                        indices_list += (current_index, )
+                        current_index += 1
+                    indices.append(indices_list)
+                else:
+                    vals_new.append(val)
+                    current_index += 1
             c_names, c_vals, s_names, s_vals = self.parent.split_dict(run.run_dict)
             names = list(itertools.chain(self.control_names, self.star_names, c_names, s_names))
-            vals = list(itertools.product(*self.control_vals, *self.star_vals, *c_vals, *s_vals))
+            vals = list(itertools.product(*vals_new, *self.star_vals, *c_vals, *s_vals))
+            vals_new = []
+            for tuple in vals:
+                new_tuple = ()
+                current_index =0
+                current_array = []
+                current_tuple = 0
+                for element in tuple:
+                    try:
+                        if current_index in indices[current_tuple]:
+                            current_array.append(element)
+                            if len(current_array) == len(indices[current_tuple]):
+                                new_tuple += (current_array,)
+                                current_array = []
+                                current_tuple +=1
+                        else:
+                            new_tuple += (element,)
+                    except IndexError:
+                        new_tuple += (element,)
+                    current_index +=1
+                vals_new.append(new_tuple)
+            vals = vals_new
         else:
+            vals_new  = []
+            indices = []
+            current_index = 0
+            for val in self.control_vals:
+                if isinstance(val[0], list):
+                    indices_list = ()
+                    for val2 in val:
+                        vals_new.append(val2)
+                        indices_list += (current_index, )
+                        current_index += 1
+                    indices.append(indices_list)
+                else:
+                    vals_new.append(val)
+                    current_index += 1
             names = list(itertools.chain(self.control_names, self.star_names))
-            vals = list(itertools.product(*self.control_vals, *self.star_vals))
+            # vals = list(itertools.product(*self.control_vals, *self.star_vals))
+            vals = list(itertools.product(*vals_new, *self.star_vals))
+            vals_new = []
+            for tuple in vals:
+                new_tuple = ()
+                current_index =0
+                current_array = []
+                current_tuple = 0
+                for element in tuple:
+                    try:
+                        if current_index in indices[current_tuple]:
+                            current_array.append(element)
+                            if len(current_array) == len(indices[current_tuple]):
+                                new_tuple += (current_array,)
+                                current_array = []
+                                current_tuple +=1
+                        else:
+                            new_tuple += (element,)
+                    except IndexError:
+                        new_tuple += (element,)
+                    current_index +=1
+                vals_new.append(new_tuple)
+            vals = vals_new
         for i in range(len(vals)):
             d = {}
             for j in range(len(names)):
@@ -36,6 +107,7 @@ class MESAPC_grid():
 
         num = int(self.parent.TOTAL_NUM_THREADS/self.parent.NUM_THREADS)
         pool = mp.Pool(processes=num)
+        print(MESA_runs)
         for _ in tqdm.tqdm(pool.imap_unordered(utils.run_mesa, MESA_runs), total=len(MESA_runs), smoothing=0):
             pass
 

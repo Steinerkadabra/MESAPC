@@ -69,6 +69,11 @@ class run_info():
         self.run_number = run_number
 
 def read_values(string):
+    if isinstance(string, list):
+        return_list = []
+        for input_element in range(len(string)):
+            return_list.append(read_values(string[input_element]))
+        return return_list
     input = string.split(",")
     if input[0] == "float":
         return [float(i) for i in input[1:]]

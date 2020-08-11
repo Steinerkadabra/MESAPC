@@ -61,6 +61,7 @@ class MESAPC():
             if len(line) == 0:
                 continue
             if line[0] != "!":
+                line=line.split("(")[0].lower()
                 pvals.append(line.split(" ")[0].lower())
         return pvals
 
