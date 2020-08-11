@@ -82,4 +82,19 @@ The `<basic>` namelist has the follwing options:
 * calculate_grid: If True then calculate the grid. If false, only the runs will be calculated (default True)
 * inlist: The default inlist is given in filebase/inlist_project. It creates a pre-main-sequence model and calculates the evolution until the ZAMS (central hydrogen below 0.68). To change the inlist, just give the full path to your inlist. 
 
+# current restrictions
+The extra controls (x_ctrl(:), ....) can currently only be used in the grid section and are not implented for runs. Also, when using extra controls, make sure to use all of them in the namelist, even if they have only one value. I you want to calculate the grid for x_ctrl(3) = 1.0, 2.0, 3.0, 4.4, your inlist_MESAPC should look something like:
+
+```fortran
+&basics
+    output_dir = "change_x_ctrl(3)"
+/
+
+&grid
+    x_ctrl(1) = "float,3.14"
+    x_ctrl(2) = "float,0.01"
+    x_ctrl(3) = "float,1.0,2.0,3.0,4.0
+/
+
+``` 
 
