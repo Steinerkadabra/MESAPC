@@ -14,7 +14,12 @@ MESAPC makes use of of mulitple Python Libraries. To have this working properly,
 Older versions of these modules have not been tested. We don' know if they will work. 
 
 
-If you have all the prerequisites installed, just clone the repository and set the environmet varibale `MESA_DIR` to the directory you are ready to go. If you cloned the repository in i.e. `/home/user/Projects` then set the environment variable using
+If you have all the prerequisites installed, just install MESAPC with
+```bash
+pip install MESAPC
+``` 
+
+and set the environmet variable `MESAPC_DIR` to the directory you are ready to go. If you cloned the repository in i.e. `/home/user/Projects` then set the environment variable using
 ```bash
 export MESAPC_DIR=/home/user/Projects/MESAPC
 ``` 
@@ -22,7 +27,7 @@ export MESAPC_DIR=/home/user/Projects/MESAPC
 # Usage
 To run MESAPC activate your environment. Then just use 
 ```bash
-python $MESAPC_DIR/run.py
+python -m MESAPC
 ``` 
 Similar to [MESA](http://mesa.sourceforge.net/), the input needed is a FORTRAN namelist file. It looks for a file called inlist_MESAPC. The basic structure is the following:
 
