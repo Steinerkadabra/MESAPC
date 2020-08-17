@@ -1,0 +1,60 @@
+! Base inlist for running the stars in our stellar grid
+
+&star_job
+! Avoid printing a lot of stuff in terminal when we start a run
+	show_log_description_at_start=.false.
+
+! set initial composition and nuclear reaction network
+  	set_uniform_initial_composition = .true.
+  	initial_zfracs = 8 
+  	initial_h1 = 0.7004353948005046
+  	initial_h2 = 0.000020                     !set in run_star_extras
+  	initial_he3 = 0.0000279481
+  	initial_he4 = 0.2794532307
+	change_net = .true.
+	new_net_name = 'pp_extras.net' 
+	change_initial_net = .true.
+	set_initial_age = .true.
+	set_initial_model_number = .true.
+	set_initial_cumulative_energy_error = .true.
+
+! load initial_seed_model
+	create_pre_main_sequence_model = .true.
+
+! display on-screen plots
+	pgstar_flag = .true.
+
+! change form lnd to lnPgas
+	change_lnPgas_flag = .true.
+	new_lnPgas_flag = .true.
+
+! set opacity tables
+	kappa_file_prefix = 'OP_gs98'
+	kappa_lowT_prefix = 'lowT_Freedman11'
+
+
+
+! startup
+	set_initial_dt = .true.
+	years_for_initial_dt = 1d-4
+
+	change_conv_vel_flag = .true.
+	new_conv_vel_flag = .true.
+
+
+/ !end of star_job namelist
+
+
+&controls
+
+	initial_mass = 1
+
+	xa_central_lower_limit_species(1) = 'h1'
+	xa_central_lower_limit(1) = 0.68
+	x_ctrl(1) = 0
+	x_ctrl(2) = 0
+
+
+	
+/ ! end of controls namelist
+
