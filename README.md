@@ -55,7 +55,7 @@ The namelist grid describes the paramaters on which to calculate the grid. The g
 * **input values**
      * for a list just type the values separated with a comma
      * for a linspace list type the elements of np.linspace(a, b, c) in the order a,b,c (again separated by a comma)
-     * COMING SOON: for a logspace list type the elements of 10**np.linspace(log10(a), log10(b), c) in the order a,b,c
+     * for a logspace list type the elements of 10**np.linspace(log10(a), log10(b), c) in the order a,b,c
  
 Examples can be found in filebase/example_inputs.
 
