@@ -1,6 +1,6 @@
  ## MESAPC - Modules for Experiments in Astrophysics Python Controller
  
-This is a library to calculate a grid (or multiple grids) of [MESA](http://mesa.sourceforge.net/) models in an easy way using a Python implementation. It is easy to use as standalone routine using a FORTRAN namelist input file as well as part of an extended code.
+This is a library to calculate a grid (or multiple grids) of [MESA](http://mesa.sourceforge.net/) models in an easy way using a Python implementation. It is easy to use as standalone routine using a FORTRAN namelist input file as well as part of an extended code. Currently MESAPC does not work with latest MESA release (15140) but should work with recent ones before that.
 
 # Getting Started
 
