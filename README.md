@@ -78,7 +78,11 @@ The additional runs will be sampled with the normal grid and the run inputs are 
 MESAPC caluclates the grids as defined in inlist_MESAPC. During the evolution you will see a `tqdm` progress bar for each run. After the evolutionas have finished the `output_dir` will hold the following:
 * **inlist_project**: The initial inlist project input file
 * **LOGS**: a folder full of more folders. Each of the folders (called grid_1, grid_2, ...grid_N, run1_1 run1_2, ..., run1_M, run2_1, etc.) will have the elements that would typically be in by LOGS directory in a MESA folder. This means the history.data and profile.data files as specified in the inlist_project (Output might be changed for different runs by including this in the `<run>` namelists as lists with one entry). In addition, the folder will hold two textfiles showing what is different in this calculation in respect to the inlist_project file. One for the star_job namelist and one for the controls inlist.
-* **multiple folders from the MESA evolutions**: For every MESA evolutionary run one folder has been created. COMING SOON: option to delete this folders.
+* Running 
+```bash
+python -m MESAPC tracker
+``` 
+shows a HR diagramm of the grid (and runs). This can be used to follow the progress of the calculations.
 
 # basic namelist
 The `<basic>` namelist has the follwing options:
